@@ -1,8 +1,7 @@
 # Fakebook Web Crawler
 
-## Approach
 
-The crawler opens a fresh TLS connection per request (`Connection: close`), sends manually formatted HTTP/1.1 requests, and parses status lines, headers, and bodies. Chunked `Transfer-Encoding` and `Content-Length` responses are both supported. `Set-Cookie` headers are merged into a small cookie jar and sent back on subsequent requests.
+The crawler opens a TLS connection per request (`Connection: close`), sends manually formatted HTTP/1.1 requests, and parses status lines, headers, and bodies. Chunked `Transfer-Encoding` and `Content-Length` responses are both supported. `Set-Cookie` headers are merged into a small cookie jar and sent back on subsequent requests.
 
 Login loads `/accounts/login/?next=/fakebook/`, parses the POST form action and hidden fields (including the CSRF token), then POSTs `application/x-www-form-urlencoded` credentials. Redirects (302) and intermittent 503 responses are retried until a final status is obtained.
 
@@ -18,11 +17,7 @@ Secret flags are matched with a regular expression against the assignment’s `<
 
 ## Testing
 
-Run with your Northeastern username and Fakebook password from the course password page:
-
 ```bash
 make
 ./crawler -s fakebook.khoury.northeastern.edu -p 443 YOUR_USERNAME YOUR_PASSWORD
 ```
-
-The program prints five flag lines to stdout. Fill `secret_flags` with your five flags before submitting.
